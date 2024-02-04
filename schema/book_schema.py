@@ -9,3 +9,7 @@ class BookRequest(BaseModel):
     author: str
     launched: Optional[date]
     rating: int = Field(gt=0,lt=6)
+
+class BookIssueRequest(BaseModel):
+    book_id: int
+    status: str
