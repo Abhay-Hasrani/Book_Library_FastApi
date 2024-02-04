@@ -1,6 +1,8 @@
 from sqlalchemy import Column, DateTime, Integer, String, func
 from models import Base
 from sqlalchemy.orm import relationship
+from models.user_book import UserBook
+
 class User(Base):
     __tablename__ = 'users'
 
