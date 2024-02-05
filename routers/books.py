@@ -2,6 +2,7 @@ from typing import Annotated
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 from controllers import books_controller
+from controllers.auth_controller import get_current_user
 from db.database import SessionLocal
 from starlette import status
 from schema.book_schema import BookIssueRequest, BookRequest
@@ -14,9 +15,6 @@ def get_db():
         yield db
     finally:
         db.close()
-
-async def get_current_user():
-    return {'username': 'abhay', 'id': 1, 'role': 'Student'}
 
 db_dependency = Annotated[Session, Depends(get_db)]
 user_dependency = Annotated[dict, Depends(get_current_user)]

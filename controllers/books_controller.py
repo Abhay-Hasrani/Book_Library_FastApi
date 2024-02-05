@@ -1,6 +1,6 @@
 from fastapi import HTTPException
 from sqlalchemy.orm import Session
-from controllers.users_controller import get_user_by_id
+from controllers.users_controller import get_user
 from helpers.enums import BookRequestStatus, UserRole
 from models.book import Book
 from starlette import status
@@ -23,10 +23,7 @@ def add_book(db: Session, book_request:BookRequest):
     return {"message": "Book added Successfully"}
     
 def generate_book_request(db: Session, user: dict, book_id: int):
-    book_model = get_book_by_id(db, book_id)
-    user_model = get_user_by_id(db, user['id'])
     user_book_model = UserBook(user_id=user['id'], book_id=book_id, status=BookRequestStatus.PENDING)
-    
     # user_model.books.append(user_book_model)
     db.add(user_book_model)
     db.commit()
