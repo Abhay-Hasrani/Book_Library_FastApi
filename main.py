@@ -5,11 +5,26 @@ from controllers.auth_controller import get_current_user
 from db.database import engine
 import models
 from routers import auth, books, requests, users
+from fastapi.middleware.cors import CORSMiddleware
 
 #load .env variables at before creating instance
 load_dotenv()
 
 app = FastAPI()
+
+
+origins = [
+    "http://localhost:3000",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 models.Base.metadata.create_all(bind=engine)
 
 @app.get("/")
