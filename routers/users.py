@@ -28,6 +28,6 @@ async def get_user(db: db_dependency, user: user_dependency):
 async def get_all_users(db: db_dependency):
     return users_controller.get_all_users(db)
 
-@router.post("/create-user", status_code=status.HTTP_201_CREATED)
+@router.post("/post-user", status_code=status.HTTP_201_CREATED)
 async def create_user(db: db_dependency, create_user_request: CreateUserRequest):
     users_controller.create_user(db,create_user_request)
