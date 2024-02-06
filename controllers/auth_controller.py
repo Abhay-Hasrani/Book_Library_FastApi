@@ -17,15 +17,12 @@ SECRET_KEY = os.environ.get("SECRET_KEY")
 
 oauth2_bearer = OAuth2PasswordBearer(tokenUrl='auth/token')
 
-def authenticate_user(username: str, password: str, role: str, db: Session):
+def authenticate_user(username: str, password: str, db: Session):
     user = db.query(User).filter(User.username == username).first()
     if not user:
         return False
     if not bcrypt_context.verify(password, user.hashed_password):
         return False
-    if role=="Admin" and user.role != "Admin":
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
-                                detail='You are not a admin')
     return user
     
 
@@ -36,7 +33,7 @@ def create_access_token(username: str, user_id: int, role: str):
 
 
 def login_for_access_token(db: Session, form_data: dict):
-    user = authenticate_user(form_data.username, form_data.password, form_data.role, db)
+    user = authenticate_user(form_data.username, form_data.password, db)
     if not user:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,
                             detail='Could not validate user.')

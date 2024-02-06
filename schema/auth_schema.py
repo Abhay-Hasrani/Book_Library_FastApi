@@ -1,11 +1,5 @@
 from pydantic import BaseModel
 
-
-class CustomOAuth2PasswordRequestForm(BaseModel):
-    username: str
-    password: str
-    role: str
-
 class CreateUserRequest(BaseModel):
     username: str
     email: str
