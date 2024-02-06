@@ -48,10 +48,6 @@ def login_for_access_token(db: Session, form_data: dict):
 
 def get_current_user(token: Annotated[str, Depends(oauth2_bearer)]):
     try:
-        print("-----------------------------------------------------")
-        print(token)
-        # print(payload)
-        print("-----------------------------------------------------")
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
         username: str = payload.get('username')
         id: int = payload.get('id')
