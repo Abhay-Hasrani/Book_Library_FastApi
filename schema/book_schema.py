@@ -12,4 +12,7 @@ class BookRequest(BaseModel):
 
 class BookIssueRequest(BaseModel):
     book_id: int
+
+class BookIssueStatusRequest(BaseModel):
+    book_id: int
     status: str
