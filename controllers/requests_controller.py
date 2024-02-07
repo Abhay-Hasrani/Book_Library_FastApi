@@ -7,7 +7,7 @@ from models.user_book import UserBook
 from schema.book_schema import BookIssueStatusRequest
 
 def get_all_requests(db: Session, user: dict):
-    return db.query(UserBook).all()
+    return db.query(UserBook).order_by(UserBook.created_at.desc()).all()
 
     
 def generate_book_request(db: Session, user: dict, book_id: int):
@@ -32,3 +32,6 @@ def change_request_status(db: Session, user: dict, book_issue_request: BookIssue
     db.commit()
     user_book = json_book_request(user_book_model)
     return {"message":"Status updated Successfully","user_book":user_book}
+
+def get_my_requests(db: Session, user: dict):
+    return db.query(UserBook).filter(UserBook.user_id == user['id']).order_by(UserBook.created_at.desc()).all()

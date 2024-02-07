@@ -24,6 +24,10 @@ user_dependency = Annotated[dict, Depends(get_current_user)]
 async def get_all_requests(db: db_dependency,user: user_dependency):
     return requests_controller.get_all_requests(db,user)
 
+@router.get("/my-requests",status_code=status.HTTP_200_OK)
+async def get_my_requests(db: db_dependency, user: user_dependency):
+    return requests_controller.get_my_requests(db,user)
+
 @router.post("/post-request", status_code=status.HTTP_201_CREATED)
 async def generate_book_request(db: db_dependency , user: user_dependency, book_issue_request: BookIssueRequest):
     return requests_controller.generate_book_request(db,user,book_issue_request.book_id)

@@ -7,7 +7,7 @@ from starlette import status
 from schema.book_schema import BookRequest
 
 def get_all_books(db: Session):
-    return db.query(Book).all()
+    return db.query(Book).order_by(Book.created_at.desc()).all()
 
 def get_book_by_id(db: Session, book_id: int):
     book_model = db.query(Book).filter(Book.id == book_id).first()
