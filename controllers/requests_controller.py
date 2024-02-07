@@ -1,4 +1,5 @@
 from fastapi import HTTPException
+from sqlalchemy import and_
 from sqlalchemy.orm import Session
 from helpers.enums import BookRequestStatus, UserRole
 from starlette import status
@@ -19,15 +20,18 @@ def get_all_requests(db: Session, user: dict):
 
     
 def generate_book_request(db: Session, user: dict, book_id: int):
-    try:
-        user_book_model = UserBook(user_id=user['id'], book_id=book_id, status=BookRequestStatus.PENDING)
+        user_book_model = db.query(UserBook) \
+            .filter(and_(UserBook.book_id == book_id , UserBook.user_id == user['id'] , UserBook.status == BookRequestStatus.PENDING)).first()
+
+        if user_book_model:
+            print(user_book_model.status)
+            raise HTTPException(status_code= status.HTTP_409_CONFLICT , detail='Request already sent')
+        
+        user_book_model = UserBook(user_id=user['id'], book_id=book_id, status=str(BookRequestStatus.PENDING))
         db.add(user_book_model)
         db.commit()
         user_book = json_book_request(user_book_model)
         return {"user_book": user_book}
-    except Exception as e:
-        raise HTTPException(status_code= status.HTTP_409_CONFLICT , detail='Request already sent')
-        
 
 
 def change_request_status(db: Session, user: dict, book_issue_request: BookIssueStatusRequest):
