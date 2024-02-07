@@ -12,7 +12,7 @@ def get_all_users(db: Session):
     return db.query(User).all()
 
 def get_user_by_id(db: Session, user: dict, user_id: int):
-    if user.role != UserRole.ADMIN:
+    if user.get('role') != UserRole.ADMIN:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail='You are not an admin.')
     return db.query(User).filter(User.id == user_id).first()
 
