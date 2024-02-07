@@ -24,6 +24,10 @@ user_dependency = Annotated[dict, Depends(get_current_user)]
 async def get_user(db: db_dependency, user: user_dependency):
     return users_controller.get_user(db,user)
 
+@router.get("/{user_id}", status_code=status.HTTP_200_OK)
+async def get_user_by_id(db: db_dependency, user: user_dependency, user_id: int):
+    return users_controller.get_user_by_id(db,user,user_id)
+
 @router.get("/all",status_code=status.HTTP_200_OK)
 async def get_all_users(db: db_dependency):
     return users_controller.get_all_users(db)
