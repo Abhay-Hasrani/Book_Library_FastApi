@@ -1,6 +1,6 @@
-from models.user import User
-from models.user_book import UserBook
-from models.book import Book
+from app.models.user import User
+from app.models.user_book import UserBook
+from app.models.book import Book
 
 
 def json_book(book: Book):

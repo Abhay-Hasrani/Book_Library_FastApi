@@ -2,9 +2,9 @@ from typing import Annotated
 from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
 from fastapi import APIRouter, Depends
-from controllers import auth_controller
-from db.database import SessionLocal
-from schema.auth_schema import Token
+from app.controllers import auth_controller
+from app.db.database import SessionLocal
+from app.schema.auth_schema import Token
 
 router = APIRouter()
 

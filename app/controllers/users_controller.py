@@ -1,15 +1,12 @@
 from fastapi import HTTPException
 from sqlalchemy.orm import Session
 from starlette import status
-from helpers.enums import UserRole
-from models.user import User
-from schema.auth_schema import CreateUserRequest
+from app.helpers.enums import UserRole
+from app.models.user import User
+from app.schema.auth_schema import CreateUserRequest
 from passlib.context import CryptContext
 
 bcrypt_context = CryptContext(schemes=['bcrypt'], deprecated='auto')
-
-def get_all_users(db: Session):
-    return db.query(User).all()
 
 def get_user_by_id(db: Session, user: dict, user_id: int):
     if user.get('role') != UserRole.ADMIN:

@@ -1,10 +1,10 @@
 from fastapi import Depends, FastAPI
 from dotenv import load_dotenv
 from fastapi.responses import RedirectResponse
-from controllers.auth_controller import get_current_user
-from db.database import engine
-import models
-from routers import auth, books, requests, users
+from app import models
+from app.controllers.auth_controller import get_current_user
+from app.db.database import engine
+from app.routers import auth, books, requests, users
 from fastapi.middleware.cors import CORSMiddleware
 
 #load .env variables at before creating instance

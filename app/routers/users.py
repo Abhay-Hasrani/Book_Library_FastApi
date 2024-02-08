@@ -1,12 +1,12 @@
 from typing import Annotated
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
-from controllers import users_controller
-from controllers.auth_controller import get_current_user
-from db.database import SessionLocal
+from app.controllers import users_controller
+from app.controllers.auth_controller import get_current_user
+from app.db.database import SessionLocal
 from starlette import status
 
-from schema.auth_schema import CreateUserRequest
+from app.schema.auth_schema import CreateUserRequest
 
 router = APIRouter()
 
@@ -27,10 +27,6 @@ async def get_user(db: db_dependency, user: user_dependency):
 @router.get("/{user_id}", status_code=status.HTTP_200_OK)
 async def get_user_by_id(db: db_dependency, user: user_dependency, user_id: int):
     return users_controller.get_user_by_id(db,user,user_id)
-
-@router.get("/all",status_code=status.HTTP_200_OK)
-async def get_all_users(db: db_dependency):
-    return users_controller.get_all_users(db)
 
 @router.post("/post-user", status_code=status.HTTP_201_CREATED)
 async def create_user(db: db_dependency, create_user_request: CreateUserRequest):

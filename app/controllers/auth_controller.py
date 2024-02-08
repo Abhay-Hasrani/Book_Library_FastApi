@@ -4,10 +4,10 @@ from dotenv import load_dotenv
 from fastapi import Depends, HTTPException
 from fastapi.security import OAuth2PasswordBearer
 from sqlalchemy.orm import Session
-from models.user import User
+from app.models.user import User
 from starlette import status
 from jose import jwt, JWTError
-from controllers.users_controller import bcrypt_context
+from app.controllers.users_controller import bcrypt_context
 
 load_dotenv()
 

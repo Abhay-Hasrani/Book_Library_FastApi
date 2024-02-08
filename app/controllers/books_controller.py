@@ -1,10 +1,9 @@
-import json
 from fastapi import HTTPException
 from sqlalchemy.orm import Session
-from helpers.model_to_json import json_book
-from models.book import Book
+from app.helpers.model_to_json import json_book
+from app.models.book import Book
 from starlette import status
-from schema.book_schema import BookRequest
+from app.schema.book_schema import BookRequest
 
 def get_all_books(db: Session):
     return db.query(Book).order_by(Book.created_at.desc()).all()

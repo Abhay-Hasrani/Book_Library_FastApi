@@ -1,5 +1,5 @@
 from sqlalchemy import Column, DateTime, ForeignKey, Integer, String, func
-from models import Base
+from app.models import Base
 
 
 class UserBook(Base):

@@ -1,11 +1,11 @@
 from typing import Annotated
 from fastapi import APIRouter, Depends, Request
 from sqlalchemy.orm import Session
-from controllers import requests_controller
-from controllers.auth_controller import get_current_user
-from db.database import SessionLocal
+from app.controllers import requests_controller
+from app.controllers.auth_controller import get_current_user
+from app.db.database import SessionLocal
 from starlette import status
-from schema.book_schema import BookIssueRequest, BookIssueStatusRequest
+from app.schema.book_schema import BookIssueRequest, BookIssueStatusRequest
 
 
 router = APIRouter()

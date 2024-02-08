@@ -1,12 +1,12 @@
 from fastapi import HTTPException
 from sqlalchemy import and_, or_
 from sqlalchemy.orm import Session
-from helpers.enums import BookRequestStatus, UserRole
+from app.helpers.enums import BookRequestStatus, UserRole
 from starlette import status
-from helpers.model_to_json import json_book_join_request, json_book_request
-from models.user import User
-from models.user_book import UserBook
-from schema.book_schema import BookIssueStatusRequest
+from app.helpers.model_to_json import json_book_join_request, json_book_request
+from app.models.user import User
+from app.models.user_book import UserBook
+from app.schema.book_schema import BookIssueStatusRequest
 
 def get_all_requests(db: Session, user: dict):
     query_result =  db.query(UserBook,User).join(UserBook).order_by(UserBook.created_at.desc()).all()
