@@ -26,7 +26,7 @@ def generate_book_request(db: Session, user: dict, book_id: int):
             .first()
 
         if user_book_model:
-            print(user_book_model.status)
+            # print(user_book_model.status)
             raise HTTPException(status_code= status.HTTP_409_CONFLICT , detail='Request already sent')
         
         user_book_model = UserBook(user_id=user['id'], book_id=book_id, status=str(BookRequestStatus.PENDING))

@@ -1,9 +1,38 @@
 version: "3.8"
 
 services:
+  backend:
+    build:
+      context: .
+      dockerfile: dockerfile
+    # command: uvicorn app.main:app --host 0.0.0.0 --port 8000
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
+    env_file:
+      - .env
+    depends_on:
+      - db
+    networks:
+      - book_backend
+      - book_frontend
+      
   db:
     image: mysql:latest
     ports:
-      - "3307:3306"
-    environment:
-      MYSQL_ROOT_PASSWORD: BooksSQLHiver
+      - "3306:3306"
+    tty: true
+    env_file:
+      - database.env
+    networks:
+      - book_backend
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql   # init.sql is an initialization script
+
+networks:
+  book_backend:
+    external: true
+  book_frontend:
+    external: true
+  

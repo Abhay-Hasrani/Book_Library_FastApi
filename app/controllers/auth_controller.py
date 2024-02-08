@@ -1,18 +1,15 @@
-import os
 from typing import Annotated
-from dotenv import load_dotenv
 from fastapi import Depends, HTTPException
 from fastapi.security import OAuth2PasswordBearer
 from sqlalchemy.orm import Session
+from app.helpers.env_helper import get_env_variable
 from app.models.user import User
 from starlette import status
 from jose import jwt, JWTError
 from app.controllers.users_controller import bcrypt_context
 
-load_dotenv()
-
-ALGORITHM = os.environ.get("ALGORITHM") 
-SECRET_KEY = os.environ.get("SECRET_KEY")  
+ALGORITHM = get_env_variable("ALGORITHM") 
+SECRET_KEY = get_env_variable("SECRET_KEY")  
 
 
 oauth2_bearer = OAuth2PasswordBearer(tokenUrl='auth/token')

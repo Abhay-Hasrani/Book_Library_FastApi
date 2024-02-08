@@ -1,20 +1,16 @@
 from fastapi import Depends, FastAPI
-from dotenv import load_dotenv
 from fastapi.responses import RedirectResponse
 from app import models
 from app.controllers.auth_controller import get_current_user
 from app.db.database import engine
+from app.helpers.env_helper import get_env_variable
 from app.routers import auth, books, requests, users
 from fastapi.middleware.cors import CORSMiddleware
 
-#load .env variables at before creating instance
-load_dotenv()
-
 app = FastAPI()
 
-
 origins = [
-    "http://localhost:3000",
+    get_env_variable("FRONTEND_BASE_URL")
 ]
 
 app.add_middleware(
