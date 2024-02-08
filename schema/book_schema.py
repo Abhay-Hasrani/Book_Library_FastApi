@@ -14,6 +14,7 @@ class BookIssueRequest(BaseModel):
     book_id: int
 
 class BookIssueStatusRequest(BaseModel):
+    id: int
     book_id: int
     user_id: int
     status: str

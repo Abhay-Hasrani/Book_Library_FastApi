@@ -16,15 +16,17 @@ def json_book(book: Book):
     return {"id":id,"imageUrl":imageUrl,"title":title,"description":description,"author":author,"launched":launched,"rating":rating,"created_at":created_at,"updated_at":updated_at}
 
 def json_book_request(user_book: UserBook):
+    id = user_book.id
     user_id = str(user_book.user_id)
     book_id = str(user_book.book_id)
     status = str(user_book.status)
     created_at = str(user_book.created_at)
     updated_at = str(user_book.updated_at)
-    return {"user_id":user_id,"book_id":book_id,"status":status,"created_at":created_at,"updated_at":updated_at}
+    return {"id":id,"user_id":user_id,"book_id":book_id,"status":status,"created_at":created_at,"updated_at":updated_at}
 
 def json_book_join_request(user_book: UserBook, user: User):
     return  {
+                "id": user_book.id,
                 "user_id": user_book.user_id,
                 "book_id": user_book.book_id,
                 "created_at": str(user_book.created_at),

@@ -1,5 +1,5 @@
 from fastapi import HTTPException
-from sqlalchemy import and_
+from sqlalchemy import and_, or_
 from sqlalchemy.orm import Session
 from helpers.enums import BookRequestStatus, UserRole
 from starlette import status
@@ -21,7 +21,9 @@ def get_all_requests(db: Session, user: dict):
     
 def generate_book_request(db: Session, user: dict, book_id: int):
         user_book_model = db.query(UserBook) \
-            .filter(and_(UserBook.book_id == book_id , UserBook.user_id == user['id'] , UserBook.status == BookRequestStatus.PENDING)).first()
+            .filter(and_(UserBook.book_id == book_id , UserBook.user_id == user['id'])) \
+            .filter(or_(UserBook.status == BookRequestStatus.PENDING, UserBook.status == BookRequestStatus.ACCEPTED)) \
+            .first()
 
         if user_book_model:
             print(user_book_model.status)
@@ -40,7 +42,7 @@ def change_request_status(db: Session, user: dict, book_issue_request: BookIssue
         raise HTTPException(status_code= status.HTTP_401_UNAUTHORIZED , detail='Authentication Failed: only Admins can accept reuqest')
     
     user_book_model = db.query(UserBook) \
-        .filter(UserBook.book_id == book_issue_request.book_id, UserBook.user_id == book_issue_request.user_id) \
+        .filter(UserBook.id == book_issue_request.id) \
         .first()
     user_book_model.status = book_issue_request.status
     db.commit()
