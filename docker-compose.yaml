@@ -28,6 +28,7 @@ services:
     networks:
       - book_backend
     volumes:
+      - mysql_data:/var/lib/mysql
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql   # init.sql is an initialization script
 
 networks:
@@ -35,4 +36,7 @@ networks:
     external: true
   book_frontend:
     external: true
+
+volumes:
+  mysql_data:
   
